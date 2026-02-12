@@ -8,7 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-# dist
+# dist (renamed to docs for github pages)
+# docs
 dist-ssr
 *.local
 

@@ -7,4 +7,7 @@ import { viteSingleFile } from "vite-plugin-singlefile"
 export default defineConfig({
   plugins: [react(), tailwindcss(), viteSingleFile()],
   base: './', // Still needed for relative paths within the single fil
+  build: {
+    outDir: 'docs',
+  }
 })
