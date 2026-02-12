@@ -61,6 +61,38 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Quick Navigation Shortcuts */}
+            <h2 className="text-2xl font-bold text-white mt-4">Navegación Externa</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <a
+                    href="https://www.google.com/maps"
+                    target="_blank"
+                    className="bg-zinc-800 hover:bg-zinc-700 p-6 rounded-3xl flex items-center gap-4 transition-colors group border border-zinc-700 hover:border-blue-500"
+                >
+                    <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg group-hover:scale-110 transition-transform">
+                        G
+                    </div>
+                    <div className="flex-1">
+                        <div className="text-xl font-bold text-white">Google Maps</div>
+                        <div className="text-zinc-400">Tráfico en tiempo real</div>
+                    </div>
+                </a>
+
+                <a
+                    href="https://www.waze.com/live-map"
+                    target="_blank"
+                    className="bg-zinc-800 hover:bg-zinc-700 p-6 rounded-3xl flex items-center gap-4 transition-colors group border border-zinc-700 hover:border-cyan-400"
+                >
+                    <div className="w-16 h-16 rounded-full bg-cyan-400 flex items-center justify-center text-black text-2xl font-bold shadow-lg group-hover:scale-110 transition-transform">
+                        W
+                    </div>
+                    <div className="flex-1">
+                        <div className="text-xl font-bold text-white">Waze</div>
+                        <div className="text-zinc-400">Avisos de comunidad</div>
+                    </div>
+                </a>
+            </div>
         </div>
     );
 };
