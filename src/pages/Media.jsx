@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, ArrowLeft, Music, Radio, Headphones } from 'lucide-react';
+import { Play, ArrowLeft, Music, Radio, Headphones, ExternalLink } from 'lucide-react';
 
 const SERVICES = [
     {
@@ -10,39 +10,47 @@ const SERVICES = [
         icon: Music,
         gradient: 'from-purple-900 to-purple-950',
         accent: 'border-purple-500',
+        embed: true, // Works in iframe
     },
     {
         id: 'beatbump',
         name: 'Beatbump',
-        description: 'Streaming alternativo',
+        description: 'Se abre en nueva pestaña',
         url: 'https://beatbump.io',
         icon: Headphones,
         gradient: 'from-orange-900 to-orange-950',
         accent: 'border-orange-500',
+        embed: false, // Cloudflare blocks iframes
     },
     {
         id: 'ytmusic',
         name: 'YouTube Music',
-        description: 'Servicio oficial',
+        description: 'Se abre en nueva pestaña',
         url: 'https://music.youtube.com',
         icon: Radio,
         gradient: 'from-red-900 to-red-950',
         accent: 'border-red-500',
+        embed: false, // Google blocks iframes
     },
 ];
 
 const Media = () => {
     const [activeService, setActiveService] = useState(null);
 
-    const selectService = (service) => {
-        setActiveService(service);
+    const handleSelect = (service) => {
+        if (service.embed) {
+            setActiveService(service);
+        } else {
+            // Open in new tab — Cloudflare/Google block iframes
+            window.open(service.url, '_blank');
+        }
     };
 
     const goBack = () => {
         setActiveService(null);
     };
 
-    // ── Fullscreen iframe view ──────────────────────────────
+    // ── Fullscreen iframe view (only for embeddable services) ──
     if (activeService) {
         return (
             <div className="h-full w-full relative bg-black overflow-hidden">
@@ -78,16 +86,16 @@ const Media = () => {
     return (
         <div className="h-full w-full p-8 bg-black">
             <h1 className="text-3xl font-bold text-white mb-2">Música</h1>
-            <p className="text-zinc-500 mb-8">Selecciona un servicio de streaming. La música seguirá sonando al cambiar de sección.</p>
+            <p className="text-zinc-500 mb-8">Selecciona un servicio. Hyperpipe se integra en la app; los demás se abren en nueva pestaña.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {SERVICES.map((service) => (
                     <button
                         key={service.id}
-                        onClick={() => selectService(service)}
+                        onClick={() => handleSelect(service)}
                         className={`
                             aspect-[4/3] rounded-3xl bg-gradient-to-br ${service.gradient}
-                            border border-white/10 hover:${service.accent}
+                            border border-white/10
                             flex flex-col items-center justify-center gap-4
                             hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer
                             relative group overflow-hidden
@@ -99,7 +107,10 @@ const Media = () => {
                         <service.icon size={56} className="text-white/90 relative z-10" />
                         <div className="relative z-10 text-center">
                             <div className="text-2xl font-bold text-white">{service.name}</div>
-                            <div className="text-sm text-zinc-400 mt-1">{service.description}</div>
+                            <div className="text-sm text-zinc-400 mt-1 flex items-center justify-center gap-1">
+                                {!service.embed && <ExternalLink size={14} />}
+                                {service.description}
+                            </div>
                         </div>
 
                         {/* Play indicator */}
