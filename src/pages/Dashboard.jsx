@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { CloudSun } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { CloudSun, Navigation as NavigationIcon } from 'lucide-react';
 
 const Dashboard = () => {
     const [time, setTime] = useState(new Date());
@@ -64,7 +65,7 @@ const Dashboard = () => {
 
             {/* Quick Navigation Shortcuts */}
             <h2 className="text-2xl font-bold text-white mt-4">Navegación Externa</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <a
                     href="https://www.google.com/maps"
                     target="_blank"
@@ -78,6 +79,19 @@ const Dashboard = () => {
                         <div className="text-zinc-400">Tráfico en tiempo real</div>
                     </div>
                 </a>
+
+                <Link
+                    to="/navigation"
+                    className="bg-zinc-800 hover:bg-zinc-700 p-6 rounded-3xl flex items-center gap-4 transition-colors group border border-zinc-700 hover:border-green-500"
+                >
+                    <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                        <NavigationIcon size={28} fill="currentColor" />
+                    </div>
+                    <div className="flex-1">
+                        <div className="text-xl font-bold text-white">Navegación</div>
+                        <div className="text-zinc-400">Navegación integrada</div>
+                    </div>
+                </Link>
 
                 <a
                     href="https://www.waze.com/live-map"
