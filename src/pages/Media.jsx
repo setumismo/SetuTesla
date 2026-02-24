@@ -1,14 +1,15 @@
-import React from 'react';
-import { Music, Radio, Headphones, Disc3, Server, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { Music, Radio, Headphones, Disc3, Server, ExternalLink, ArrowLeft, Antenna } from 'lucide-react';
 
 const SERVICES = [
     {
         id: 'ytmusic',
         name: 'YouTube Music',
-        description: 'Servicio oficial de Google',
+        description: 'Servicio oficial',
         url: 'https://music.youtube.com',
         icon: Radio,
         gradient: 'from-red-900 to-red-950',
+        embed: false,
     },
     {
         id: 'spotify',
@@ -17,14 +18,16 @@ const SERVICES = [
         url: 'https://open.spotify.com',
         icon: Disc3,
         gradient: 'from-green-900 to-green-950',
+        embed: false,
     },
     {
         id: 'tidal',
         name: 'Tidal',
-        description: 'Audio de alta fidelidad',
+        description: 'Alta fidelidad',
         url: 'https://listen.tidal.com',
         icon: Music,
         gradient: 'from-zinc-800 to-black',
+        embed: false,
     },
     {
         id: 'navidrome',
@@ -33,59 +36,104 @@ const SERVICES = [
         url: 'http://79.116.70.45:4533',
         icon: Server,
         gradient: 'from-blue-900 to-blue-950',
+        embed: true,
+    },
+    {
+        id: 'los40',
+        name: 'LOS40',
+        description: 'Radio en directo',
+        url: 'https://play.los40.com',
+        icon: Antenna,
+        gradient: 'from-yellow-800 to-yellow-950',
+        embed: false,
     },
     {
         id: 'hyperpipe',
         name: 'Hyperpipe',
-        description: 'YouTube Music alternativo',
+        description: 'YT alternativo',
         url: 'https://hyperpipe.surge.sh',
         icon: Headphones,
         gradient: 'from-purple-900 to-purple-950',
+        embed: false,
     },
     {
         id: 'beatbump',
         name: 'Beatbump',
-        description: 'Streaming alternativo',
+        description: 'Alternativo',
         url: 'https://beatbump.io',
         icon: Headphones,
         gradient: 'from-orange-900 to-orange-950',
+        embed: false,
     },
 ];
 
 const Media = () => {
+    const [embeddedService, setEmbeddedService] = useState(null);
+
+    const handleSelect = (service) => {
+        if (service.embed) {
+            setEmbeddedService(service);
+        } else {
+            window.open(service.url, '_blank');
+        }
+    };
+
+    // ── Embedded iframe view ────────────────────────────────
+    if (embeddedService) {
+        return (
+            <div className="h-full w-full relative bg-black overflow-hidden">
+                <button
+                    onClick={() => setEmbeddedService(null)}
+                    className="absolute top-4 left-4 z-20 w-16 h-16 bg-black/80 backdrop-blur-xl border border-zinc-700 rounded-full flex items-center justify-center text-white hover:bg-zinc-800 active:scale-95 transition-all shadow-2xl"
+                >
+                    <ArrowLeft size={28} />
+                </button>
+                <div className="absolute top-5 left-24 z-20 px-4 py-2 bg-black/60 backdrop-blur-md border border-zinc-700 rounded-full">
+                    <span className="text-sm text-zinc-300 font-medium">{embeddedService.name}</span>
+                </div>
+                <iframe
+                    src={embeddedService.url}
+                    title={embeddedService.name}
+                    allow="autoplay; encrypted-media"
+                    className="w-full h-full border-0"
+                    style={{ background: '#000', colorScheme: 'dark' }}
+                />
+            </div>
+        );
+    }
+
+    // ── Service selector ────────────────────────────────────
     return (
         <div className="h-full w-full p-8 bg-black overflow-auto">
             <h1 className="text-3xl font-bold text-white mb-2">Música</h1>
             <p className="text-zinc-500 mb-6">
-                Se abrirán en nueva pestaña. El audio sigue sonando mientras navegas.
+                Selecciona un servicio. El audio sigue sonando mientras navegas.
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
                 {SERVICES.map((service) => (
-                    <a
+                    <button
                         key={service.id}
-                        href={service.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        onClick={() => handleSelect(service)}
                         className={`
                             aspect-square rounded-2xl bg-gradient-to-br ${service.gradient}
                             border border-white/10 hover:border-white/30
-                            flex flex-col items-center justify-center gap-3
+                            flex flex-col items-center justify-center gap-2
                             hover:scale-[1.03] active:scale-[0.97] transition-all cursor-pointer
-                            relative group overflow-hidden no-underline p-4
+                            relative group overflow-hidden p-3
                         `}
                     >
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors rounded-2xl" />
 
-                        <service.icon size={36} className="text-white/90 relative z-10" />
+                        <service.icon size={32} className="text-white/90 relative z-10" />
                         <div className="relative z-10 text-center">
-                            <div className="text-sm font-bold text-white leading-tight">{service.name}</div>
-                            <div className="text-[11px] text-zinc-400 mt-1 flex items-center justify-center gap-1">
-                                <ExternalLink size={10} />
+                            <div className="text-xs font-bold text-white leading-tight">{service.name}</div>
+                            <div className="text-[10px] text-zinc-400 mt-0.5 flex items-center justify-center gap-0.5">
+                                {service.embed ? null : <ExternalLink size={8} />}
                                 {service.description}
                             </div>
                         </div>
-                    </a>
+                    </button>
                 ))}
             </div>
         </div>
