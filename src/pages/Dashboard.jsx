@@ -22,7 +22,7 @@ const Dashboard = ({ setView }) => {
             {/* Header / Greeting */}
             <h1 className="text-4xl font-bold text-white mb-4">Buenas Tardes</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Clock Widget */}
                 <div className="bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 flex flex-col items-center justify-center aspect-video">
                     <div className="text-8xl font-thin tracking-tighter text-white">
@@ -40,25 +40,6 @@ const Dashboard = ({ setView }) => {
                     <div className="text-6xl font-light">22°</div>
                     <div className="text-zinc-400 mt-2">Parcialmente Nublado</div>
                     <div className="text-sm text-zinc-500 mt-1">Max: 24° Min: 18°</div>
-                </div>
-
-                {/* Status / Car Info */}
-                <div className="bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 flex flex-col justify-between aspect-video relative">
-                    <h3 className="text-xl text-zinc-400">Model Y</h3>
-                    <div className="flex items-end justify-between">
-                        <div>
-                            <div className="text-5xl font-bold text-green-500">284<span className="text-2xl ml-1">km</span></div>
-                            <div className="text-sm text-zinc-500 mt-1">Autonomía</div>
-                        </div>
-                        <div className="text-right">
-                            <div className="text-4xl font-bold">68%</div>
-                            <div className="text-sm text-zinc-500 mt-1">Batería</div>
-                        </div>
-                    </div>
-                    {/* Battery bar */}
-                    <div className="w-full bg-zinc-800 h-2 rounded-full mt-4 overflow-hidden">
-                        <div className="bg-green-500 h-full w-[68%]"></div>
-                    </div>
                 </div>
             </div>
 
