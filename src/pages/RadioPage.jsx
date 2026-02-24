@@ -3,18 +3,18 @@ import { Play, Pause, Square, Search, X, Radio, Antenna, Volume2 } from 'lucide-
 
 // ── Predefined favorite stations ────────────────────────────
 const FAVORITES = [
-    { name: 'LOS40', genre: 'Pop', country: 'ES', color: 'from-yellow-700 to-yellow-900', url: '' },
-    { name: 'LOS40 Classic', genre: 'Clásicos', country: 'ES', color: 'from-amber-700 to-amber-900', url: '' },
-    { name: 'Cadena SER', genre: 'Noticias', country: 'ES', color: 'from-blue-700 to-blue-900', url: '' },
-    { name: 'Cadena COPE', genre: 'Noticias', country: 'ES', color: 'from-sky-700 to-sky-900', url: '' },
-    { name: 'Rock FM', genre: 'Rock', country: 'ES', color: 'from-red-700 to-red-900', url: '' },
-    { name: 'Europa FM', genre: 'Pop/Dance', country: 'ES', color: 'from-green-700 to-green-900', url: '' },
-    { name: 'Kiss FM', genre: 'Dance', country: 'ES', color: 'from-pink-700 to-pink-900', url: '' },
-    { name: 'Cadena Dial', genre: 'Español', country: 'ES', color: 'from-orange-700 to-orange-900', url: '' },
-    { name: 'RAC1', genre: 'Catalunya', country: 'ES', color: 'from-indigo-700 to-indigo-900', url: '' },
-    { name: 'Flaixbac', genre: 'Catalunya', country: 'ES', color: 'from-purple-700 to-purple-900', url: '' },
-    { name: 'BBC Radio 1', genre: 'Pop/Rock', country: 'GB', color: 'from-zinc-700 to-zinc-900', url: '' },
-    { name: 'NRJ', genre: 'Electrónica', country: 'FR', color: 'from-teal-700 to-teal-900', url: '' },
+    { name: 'LOS40', genre: 'Pop', country: 'ES', color: 'from-yellow-700 to-yellow-900', url: '', logo: 'https://play.los40.com/apple-touch-icon.png' },
+    { name: 'LOS40 Classic', genre: 'Clásicos', country: 'ES', color: 'from-amber-700 to-amber-900', url: '', logo: 'https://play.los40classic.com/apple-touch-icon.png' },
+    { name: 'Cadena SER', genre: 'Noticias', country: 'ES', color: 'from-blue-700 to-blue-900', url: '', logo: 'https://cadenaser.com/apple-touch-icon.png' },
+    { name: 'Cadena COPE', genre: 'Noticias', country: 'ES', color: 'from-sky-700 to-sky-900', url: '', logo: 'https://www.cope.es/apple-touch-icon.png' },
+    { name: 'Rock FM', genre: 'Rock', country: 'ES', color: 'from-red-700 to-red-900', url: '', logo: 'https://www.rockfm.fm/apple-touch-icon.png' },
+    { name: 'Europa FM', genre: 'Pop/Dance', country: 'ES', color: 'from-green-700 to-green-900', url: '', logo: 'https://www.europafm.com/apple-touch-icon.png' },
+    { name: 'Kiss FM', genre: 'Dance', country: 'ES', color: 'from-pink-700 to-pink-900', url: '', logo: 'https://www.kissfm.es/apple-touch-icon.png' },
+    { name: 'Cadena Dial', genre: 'Español', country: 'ES', color: 'from-orange-700 to-orange-900', url: '', logo: 'https://www.cadenadial.com/apple-touch-icon.png' },
+    { name: 'RAC1', genre: 'Catalunya', country: 'ES', color: 'from-indigo-700 to-indigo-900', url: '', logo: 'https://www.rac1.cat/apple-touch-icon.png' },
+    { name: 'Flaixbac', genre: 'Catalunya', country: 'ES', color: 'from-purple-700 to-purple-900', url: '', logo: 'https://www.flaixbac.cat/apple-touch-icon.png' },
+    { name: 'BBC Radio 1', genre: 'Pop/Rock', country: 'GB', color: 'from-zinc-700 to-zinc-900', url: '', logo: 'https://sounds.files.bbci.co.uk/3.5.2/networks/bbc_radio_one/colour_default.svg' },
+    { name: 'NRJ', genre: 'Electrónica', country: 'FR', color: 'from-teal-700 to-teal-900', url: '', logo: 'https://www.nrj.fr/apple-touch-icon.png' },
 ];
 
 const RADIO_API = 'https://de1.api.radio-browser.info/json/stations';
@@ -184,6 +184,7 @@ const RadioPage = () => {
                                         country: station.countrycode,
                                         color: 'from-zinc-700 to-zinc-900',
                                         url: station.url_resolved,
+                                        logo: station.favicon || '',
                                     })}
                                     className={`
                                         rounded-2xl bg-gradient-to-br from-zinc-700 to-zinc-900
@@ -194,7 +195,11 @@ const RadioPage = () => {
                                         min-h-[100px]
                                     `}
                                 >
-                                    <Antenna size={24} className="text-white/80" />
+                                    {station.favicon ? (
+                                        <img src={station.favicon} alt={station.name} className="w-10 h-10 rounded-lg object-contain bg-white/10" onError={(e) => { e.target.style.display = 'none'; }} />
+                                    ) : (
+                                        <Antenna size={24} className="text-white/80" />
+                                    )}
                                     <div className="text-xs font-bold text-white text-center leading-tight line-clamp-2">{station.name}</div>
                                     <div className="text-[10px] text-zinc-400">{station.countrycode}</div>
                                 </button>
@@ -219,7 +224,11 @@ const RadioPage = () => {
                                 min-h-[100px]
                             `}
                         >
-                            <Radio size={24} className="text-white/80" />
+                            {station.logo ? (
+                                <img src={station.logo} alt={station.name} className="w-12 h-12 rounded-lg object-contain bg-white/10" onError={(e) => { e.target.style.display = 'none'; }} />
+                            ) : (
+                                <Radio size={24} className="text-white/80" />
+                            )}
                             <div className="text-xs font-bold text-white text-center leading-tight">{station.name}</div>
                             <div className="text-[10px] text-zinc-400">{station.genre}</div>
                         </button>
@@ -233,8 +242,10 @@ const RadioPage = () => {
                 <div className="flex-1 min-w-0">
                     {currentStation ? (
                         <div className="flex items-center gap-3">
-                            <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${currentStation.color || 'from-blue-600 to-blue-800'} flex items-center justify-center shrink-0`}>
-                                {isPlaying ? (
+                            <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${currentStation.color || 'from-blue-600 to-blue-800'} flex items-center justify-center shrink-0 overflow-hidden`}>
+                                {currentStation.logo ? (
+                                    <img src={currentStation.logo} alt="" className={`w-full h-full object-contain p-1 ${isPlaying ? 'animate-pulse' : 'opacity-60'}`} />
+                                ) : isPlaying ? (
                                     <Volume2 size={18} className="text-white animate-pulse" />
                                 ) : (
                                     <Radio size={18} className="text-white/60" />
