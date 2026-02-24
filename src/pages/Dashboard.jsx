@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { CloudSun, Navigation as NavigationIcon } from 'lucide-react';
 
-const Dashboard = () => {
+const Dashboard = ({ setView }) => {
     const [time, setTime] = useState(new Date());
 
     useEffect(() => {
@@ -80,9 +79,9 @@ const Dashboard = () => {
                     </div>
                 </a>
 
-                <Link
-                    to="/navigation"
-                    className="bg-zinc-800 hover:bg-zinc-700 p-6 rounded-3xl flex items-center gap-4 transition-colors group border border-zinc-700 hover:border-green-500"
+                <button
+                    onClick={() => setView('navigation')}
+                    className="bg-zinc-800 hover:bg-zinc-700 p-6 rounded-3xl flex items-center gap-4 transition-colors group border border-zinc-700 hover:border-green-500 text-left"
                 >
                     <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
                         <NavigationIcon size={28} fill="currentColor" />
@@ -91,7 +90,7 @@ const Dashboard = () => {
                         <div className="text-xl font-bold text-white">Navegación</div>
                         <div className="text-zinc-400">Navegación integrada</div>
                     </div>
-                </Link>
+                </button>
 
                 <a
                     href="https://www.waze.com/live-map"
