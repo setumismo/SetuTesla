@@ -36,7 +36,7 @@ const SERVICES = [
         url: 'http://79.116.70.45:4533',
         icon: Server,
         gradient: 'from-blue-900 to-blue-950',
-        embed: true,
+        embed: false,
     },
     {
         id: 'hyperpipe',
