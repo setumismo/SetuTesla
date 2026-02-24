@@ -64,7 +64,6 @@ const Media = () => {
                     src={activeService.url}
                     title={activeService.name}
                     allow="autoplay; encrypted-media"
-                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"
                     className="w-full h-full border-0"
                     style={{
                         background: '#000',
