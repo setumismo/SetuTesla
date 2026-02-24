@@ -4,6 +4,7 @@ import Dashboard from '../pages/Dashboard';
 import Navigation from '../pages/Navigation';
 import Media from '../pages/Media';
 import Settings from '../pages/Settings';
+import RadioPage from '../pages/RadioPage';
 
 const Layout = ({ currentView, setView }) => {
     return (
@@ -19,6 +20,9 @@ const Layout = ({ currentView, setView }) => {
                 </div>
                 <div style={{ display: currentView === 'media' ? 'block' : 'none' }} className="h-full w-full">
                     <Media />
+                </div>
+                <div style={{ display: currentView === 'radio' ? 'block' : 'none' }} className="h-full w-full">
+                    <RadioPage />
                 </div>
                 <div style={{ display: currentView === 'settings' ? 'block' : 'none' }} className="h-full w-full overflow-auto">
                     <Settings />

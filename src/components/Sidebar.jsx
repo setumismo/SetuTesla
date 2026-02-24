@@ -1,11 +1,12 @@
 import React from 'react';
-import { LayoutDashboard, Map, Music, Settings } from 'lucide-react';
+import { LayoutDashboard, Map, Music, Radio, Settings } from 'lucide-react';
 
 const Sidebar = ({ currentView, setView }) => {
     const navItems = [
         { id: 'dashboard', icon: LayoutDashboard, label: 'Panel' },
         { id: 'navigation', icon: Map, label: 'Navegación' },
         { id: 'media', icon: Music, label: 'Música' },
+        { id: 'radio', icon: Radio, label: 'Radio' },
         { id: 'settings', icon: Settings, label: 'Ajustes' },
     ];
 

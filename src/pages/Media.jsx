@@ -39,15 +39,6 @@ const SERVICES = [
         embed: true,
     },
     {
-        id: 'los40',
-        name: 'LOS40',
-        description: 'Radio en directo',
-        url: 'https://play.los40.com',
-        icon: Antenna,
-        gradient: 'from-yellow-800 to-yellow-950',
-        embed: false,
-    },
-    {
         id: 'hyperpipe',
         name: 'Hyperpipe',
         description: 'YT alternativo',
