@@ -2,19 +2,22 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Square, Search, X, Radio, Antenna, Volume2 } from 'lucide-react';
 
 // ── Predefined favorite stations ────────────────────────────
+// Logos via Google Favicon service (reliable, always correct)
+const gLogo = (domain) => `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+
 const FAVORITES = [
-    { name: 'LOS40', genre: 'Pop', country: 'ES' },
-    { name: 'LOS40 Classic', genre: 'Clásicos', country: 'ES' },
-    { name: 'Cadena SER', genre: 'Noticias', country: 'ES' },
-    { name: 'Cadena COPE', genre: 'Noticias', country: 'ES' },
-    { name: 'Rock FM', genre: 'Rock', country: 'ES' },
-    { name: 'Europa FM', genre: 'Pop/Dance', country: 'ES' },
-    { name: 'Kiss FM', genre: 'Dance', country: 'ES' },
-    { name: 'Cadena Dial', genre: 'Español', country: 'ES' },
-    { name: 'RAC1', genre: 'Catalunya', country: 'ES' },
-    { name: 'Flaixbac', genre: 'Catalunya', country: 'ES' },
-    { name: 'BBC Radio 1', genre: 'Pop/Rock', country: 'GB' },
-    { name: 'NRJ', genre: 'Electrónica', country: 'FR' },
+    { name: 'LOS40', genre: 'Pop', country: 'ES', logo: gLogo('los40.com') },
+    { name: 'LOS40 Classic', genre: 'Clásicos', country: 'ES', logo: gLogo('los40classic.com') },
+    { name: 'Cadena SER', genre: 'Noticias', country: 'ES', logo: gLogo('cadenaser.com') },
+    { name: 'Cadena COPE', genre: 'Noticias', country: 'ES', logo: gLogo('cope.es') },
+    { name: 'Rock FM', genre: 'Rock', country: 'ES', logo: gLogo('rockfm.fm') },
+    { name: 'Europa FM', genre: 'Pop/Dance', country: 'ES', logo: gLogo('europafm.com') },
+    { name: 'Kiss FM', genre: 'Dance', country: 'ES', logo: gLogo('kissfm.es') },
+    { name: 'Cadena Dial', genre: 'Español', country: 'ES', logo: gLogo('cadenadial.com') },
+    { name: 'RAC1', genre: 'Catalunya', country: 'ES', logo: gLogo('rac1.cat') },
+    { name: 'Flaixbac', genre: 'Catalunya', country: 'ES', logo: gLogo('flaixbac.cat') },
+    { name: 'BBC Radio 1', genre: 'Pop/Rock', country: 'GB', logo: gLogo('bbc.co.uk') },
+    { name: 'NRJ', genre: 'Electrónica', country: 'FR', logo: gLogo('nrj.fr') },
 ];
 
 const RADIO_API = 'https://de1.api.radio-browser.info/json/stations';
@@ -41,7 +44,7 @@ async function resolveStation(stationName) {
 
 const RadioPage = () => {
     const audioRef = useRef(null);
-    const [stations, setStations] = useState(FAVORITES.map(s => ({ ...s, url: '', logo: '' })));
+    const [stations, setStations] = useState(FAVORITES.map(s => ({ ...s, url: '' })));
     const [currentStation, setCurrentStation] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -49,13 +52,13 @@ const RadioPage = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [searching, setSearching] = useState(false);
 
-    // ── Resolve stream URLs + logos on mount ────────────────
+    // ── Resolve stream URLs on mount (logos are hardcoded) ───
     useEffect(() => {
         const resolveAll = async () => {
             const resolved = await Promise.all(
                 FAVORITES.map(async (station) => {
-                    const { url, logo } = await resolveStation(station.name);
-                    return { ...station, url, logo };
+                    const { url } = await resolveStation(station.name);
+                    return { ...station, url: url || '' };
                 })
             );
             setStations(resolved);
