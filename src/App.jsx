@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Layout from './components/Layout';
 
 function App() {
-  const [currentView, setCurrentView] = useState('dashboard');
+  // Default to 'navigation' (Navegador GPS estilo Google Maps / Tesla)
+  const [currentView, setCurrentView] = useState('navigation');
 
   return (
     <Layout currentView={currentView} setView={setCurrentView} />
